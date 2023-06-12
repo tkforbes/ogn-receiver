@@ -1,7 +1,7 @@
 
 
 ## add a partition that can be used to keep station OGN records.
-
+PARTUUID=833fe3cf-03  /extlogs        ext4    rw,noexec,nofail,noatime  0       0
 
 ## rsync OGN station log records to external host for safekeeping.
 
