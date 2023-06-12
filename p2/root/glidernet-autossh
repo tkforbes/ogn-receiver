@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Check if autossh is not already running
+pgrepPid=`pgrep autossh`
+if [ "$?" -eq 0 ]
+then
+  echo "Autossh already running with PID $pgrepPid => Exiting" >&2;
+  exit 1
+fi
+
+
+### Loading OGN config
+# Need this hack to allow sourcing from a file in dos format
+source /dev/stdin < <(dos2unix < /boot/OGN-receiver.conf)
+
+if [ "$EnableCoreOGNTeamRemoteAdmin" != "true" ]
+then
+  echo "Remote admin not enabled => Exiting" >&2
+  exit 0;
+fi
+
+echo "Checking internet connection." >&2
+/usr/bin/wget --spider --quiet "http://autossh.glidernet.org/"
+if [ "$?" -ne 0 ]
+then
+  echo "Not Connected => Exiting" >&2
+  exit 1
+fi
+echo "Connected." >&2
+
+# By defualt use Ethernet adress of interface named eth0
+mac=`cat /sys/class/net/eth0/address`
+if [ -z "$mac" ] # But if something is going bad use Ethernet adress of interface managing default route.
+then
+  # Get Ethernet MAC adress of interface used for default route as ID
+  mac=`cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address`
+fi
+
+# 
+if [ -f "/root/image-version" ]
+then
+  imageVersion=`cat /root/image-version`
+else
+  imageVersion="unknown"
+fi
+
+port=`/usr/bin/wget --quiet "http://autossh.glidernet.org/remoteReceiver/?r=$ReceiverName&m=$mac&i=$imageVersion" -O -`
+if [ "$?" -eq 0 ]
+then
+ echo "Ok ${port}" >&2
+  /usr/bin/autossh -f -R ${port}:localhost:22 glidernet-assh@autossh.glidernet.org -N -M ${port}0 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3"
+  exit 0
+fi
+exit 1
