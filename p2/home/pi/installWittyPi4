@@ -1,0 +1,4 @@
+#!/bin/bash
+touch ~/IveBeenRun
+
+curl -s https://www.uugear.com/repo/WittyPi4/install.sh | sudo -E bash
