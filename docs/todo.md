@@ -1,14 +1,22 @@
 
 
-add a partition that can be used to keep station OGN records.
+## add a partition that can be used to keep station OGN records.
 
 
-rsync OGN station log records to external host for safekeeping.
+## rsync OGN station log records to external host for safekeeping.
 
-disable services that DV has identified to reduce Internet data.
+## disable services that DV has identified to reduce Internet data.
 
-add Pi Witty software for scheduled shutdown and boot.
+Disable automated eeprom and other update services
+systemctl disable rpi-eeprom-update.service
+systemctl disable apt-daily-upgrade.timer
+systemctl disable apt-daily.timer
 
-write a script to automate the process described in "howto-extend-original-image.md"
+
+
+# add Pi Witty software for scheduled shutdown and boot.
+
+# write a script to automate the process described in "howto-extend-original-image.md"
+
 - might want to leave out the final zip production and do it manually.
 
