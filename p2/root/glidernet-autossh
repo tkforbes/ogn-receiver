@@ -28,22 +28,6 @@ then
 fi
 echo "Connected." >&2
 
-# By defualt use Ethernet adress of interface named eth0
-mac=`cat /sys/class/net/eth0/address`
-if [ -z "$mac" ] # But if something is going bad use Ethernet adress of interface managing default route.
-then
-  # Get Ethernet MAC adress of interface used for default route as ID
-  mac=`cat /sys/class/net/$(ip route show default | awk '/default/ {print $5}')/address`
-fi
-
-# 
-if [ -f "/root/image-version" ]
-then
-  imageVersion=`cat /root/image-version`
-else
-  imageVersion="unknown"
-fi
-
 if [ "$ReceiverName" == "CPL3" ]; then
    monitorPort=6000
 elif [ "$ReceiverName" == "FALLFLD" ]; then
@@ -60,7 +44,6 @@ elif [ "$ReceiverName" == "WinghamON" ]; then
    monitorPort=6120
 fi
 
-#port=`/usr/bin/wget --quiet "http://autossh.glidernet.org/remoteReceiver/?r=$ReceiverName&m=$mac&i=$imageVersion" -O -`
 if [ "$?" -eq 0 ]
 then
  echo "Ok ${port}" >&2
