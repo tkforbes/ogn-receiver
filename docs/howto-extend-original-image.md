@@ -3,8 +3,11 @@
 tf@prince:/home/tf/workdir# sudo su            
 [sudo] password for tf: 
 
+# make a copy of the original image. we will work on the copy.
+root@prince:/home/tf/workdir# cp img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img img/ognstation.img
+
 # extend the file size of the original image
-root@prince:/home/tf/workdir# fallocate -l 3.5G ./2022-04-29-rpi-lite-ognro-v0.3-stretch.img
+root@prince:/home/tf/workdir# fallocate -l 3.9G img/ognstation.img 
 
 # resize the second partition with parted
 root@prince:/home/tf/workdir# parted <<'EOT'
@@ -15,8 +18,8 @@ root@prince:/home/tf/workdir# parted <<'EOT'
 GNU Parted 3.4
 Using /dev/nvme0n1
 Welcome to GNU Parted! Type 'help' to view a list of commands.
-(parted) select ./2022-04-29-rpi-lite-ognro-v0.3-stretch.img              
-Using /home/tf/workdir/2022-04-29-rpi-lite-ognro-v0.3-stretch.img
+(parted) select img/ognstation.img        
+Using /home/tf/workdir/img/ognstation.img
 (parted) resizepart 2 100%FREE                                            
 (parted) quit                                                             
 
@@ -51,36 +54,48 @@ resize2fs 1.46.5 (30-Dec-2021)
 Resizing the filesystem on /dev/loop23p2 to 850944 (4k) blocks.
 The filesystem on /dev/loop23p2 is now 850944 (4k) blocks long.
 
-# make a mount directory
-root@prince:/home/tf/workdir# mkdir /mnt/tmp/
+# make mount directories if necessary
+root@prince:/home/tf/workdir# mkdir /mnt/p1
+root@prince:/home/tf/workdir# mkdir /mnt/p2
+
+# mount the first partition
+root@prince:/home/tf/workdir# mount /dev/loop23p2 /mnt/p1
+
+# copy template configuration files
+root@prince:/home/tf/workdir# cp p1/OGN-receiver.conf.* /mnt/p1/
 
 # mount the second partition
-root@prince:/home/tf/workdir# mount /dev/loop23p2 /mnt/tmp/
+root@prince:/home/tf/workdir# mount /dev/loop23p2 /mnt/p2
+
+# update glidernet-autossh with custom version
+root@prince:/home/tf/workdir# cp p2/root/root/glidernet-autossh /mnt/p2/root/
 
 # set correct timezone
-root@prince:/home/tf/workdir# rm /mnt/tmp/etc/localtime
-root@prince:/home/tf/workdir# ln -s /usr/share/zoneinfo/America/Montreal /mnt/tmp/etc/localtime
+root@prince:/home/tf/workdir# rm /mnt/p2/etc/localtime
+root@prince:/home/tf/workdir# ln -s /usr/share/zoneinfo/America/Montreal /mnt/p2/etc/localtime
 
-# the following two steps ensure efficient compression.
+# the following two steps ensure efficient compression of
+# the newly allocated space on p2.
 
 # add a file of zeros to the filesystem until full
 root@prince:/home/tf/workdir# dd if=/dev/zero of=/mnt/tmp/delme
-dd: writing to '/mnt/tmp/delme': No space left on device
+dd: writing to '/mnt/p2/delme': No space left on device
 3601449+0 records in
 3601448+0 records out
 1843941376 bytes (1.8 GB, 1.7 GiB) copied, 7.04904 s, 262 MB/s
 
 # delete that same file. 
-root@prince:/home/tf/workdir# rm /mnt/tmp/delme
+root@prince:/home/tf/workdir# rm /mnt/p2/delme
 
-# unmount the partition from the mount point
-root@prince:/home/tf/workdir# umount /mnt/tmp/
+# unmount the partitions from the mount points
+root@prince:/home/tf/workdir# umount /mnt/p1/
+root@prince:/home/tf/workdir# umount /mnt/p2/
 
 # detach the loop device.
 root@prince:/home/tf/workdir# losetup --detach /dev/loop28
 
 # compress the image.
-root@prince:/home/tf/workdir# zip 2022-04-29-rpi-lite-ognro-v0.3-stretch--resized.img.zip 2022-04-29-rpi-lite-ognro-v0.3-stretch.img
-  adding: 2022-04-29-rpi-lite-ognro-v0.3-stretch.img (deflated 85%)
+root@prince:/home/tf/workdir# zip img/ognstation.img.zip img/ognstation.img
+  adding: ognstation.img (deflated 85%)
 ```
 
