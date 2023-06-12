@@ -95,7 +95,7 @@ root@prince:/home/tf/workdir# umount /mnt/p2/
 root@prince:/home/tf/workdir# losetup --detach /dev/loop28
 
 # compress the image.
-root@prince:/home/tf/workdir# zip img/ognstation.img.zip img/ognstation.img
+root@prince:/home/tf/workdir# cd img && zip ognstation.img.zip ognstation.img && cd ..
   adding: ognstation.img (deflated 85%)
 ```
 
