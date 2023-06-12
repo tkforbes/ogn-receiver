@@ -24,14 +24,14 @@ Using /home/tf/workdir/img/ognstation.img
 (parted) quit                                                             
 
 # associate the image file with a loop device
-root@prince:/home/tf/workdir# losetup --show --find 2022-04-29-rpi-lite-ognro-v0.3-stretch.img
+root@prince:/home/tf/workdir# myloop=`losetup --show --find img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img`
 /dev/loop23
 
 # probe the device for its partitions
-root@prince:/home/tf/workdir# partprobe /dev/loop23
+root@prince:/home/tf/workdir# partprobe ${myloop}
 
 # optional. just to display info.
-root@prince:/home/tf/workdir# lsblk /dev/loop23
+root@prince:/home/tf/workdir# lsblk $myloop
 
 NAME       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
 loop23       7:23   0  3.5G  0 loop 
@@ -39,7 +39,7 @@ loop23       7:23   0  3.5G  0 loop
 └─loop23p2 259:9    0  3.2G  0 part 
 
 # cleanup the file system on the second partition. avoids a problem with the next step.
-root@prince:/home/tf/workdir# e2fsck -f /dev/loop23p2
+root@prince:/home/tf/workdir# e2fsck -f ${myloop}p2
 e2fsck 1.46.5 (30-Dec-2021)
 Pass 1: Checking inodes, blocks, and sizes
 Pass 2: Checking directory structure
@@ -49,7 +49,7 @@ Pass 5: Checking group summary information
 rootfs: 47302/106496 files (0.8% non-contiguous), 389879/408165 blocks
 
 # resize the file system in the second partition.
-root@prince:/home/tf/workdir# resize2fs /dev/loop23p2
+root@prince:/home/tf/workdir# resize2fs ${myloop}p2
 resize2fs 1.46.5 (30-Dec-2021)
 Resizing the filesystem on /dev/loop23p2 to 850944 (4k) blocks.
 The filesystem on /dev/loop23p2 is now 850944 (4k) blocks long.
@@ -59,13 +59,13 @@ root@prince:/home/tf/workdir# mkdir /mnt/p1
 root@prince:/home/tf/workdir# mkdir /mnt/p2
 
 # mount the first partition
-root@prince:/home/tf/workdir# mount /dev/loop23p2 /mnt/p1
+root@prince:/home/tf/workdir# mount ${myloop}p1 /mnt/p1
 
 # copy template configuration files
 root@prince:/home/tf/workdir# cp p1/OGN-receiver.conf.* /mnt/p1/
 
 # mount the second partition
-root@prince:/home/tf/workdir# mount /dev/loop23p2 /mnt/p2
+root@prince:/home/tf/workdir# mount ${myloop}p2 /mnt/p2
 
 # update glidernet-autossh with custom version
 root@prince:/home/tf/workdir# cp p2/root/root/glidernet-autossh /mnt/p2/root/
@@ -92,10 +92,20 @@ root@prince:/home/tf/workdir# umount /mnt/p1/
 root@prince:/home/tf/workdir# umount /mnt/p2/
 
 # detach the loop device.
-root@prince:/home/tf/workdir# losetup --detach /dev/loop28
+root@prince:/home/tf/workdir# losetup --detach ${myloop}
 
 # compress the image.
 root@prince:/home/tf/workdir# cd img && zip ognstation.img.zip ognstation.img && cd ..
   adding: ognstation.img (deflated 85%)
+
+
+
+# mount p3 three to /data
+PARTUUID=833fe3cf-03  /data   ext4    rw,noexec,nofail,noatime  0       0
+
+
+# create /ogn/log on p3
+mkdir -p /mnt/p3/ogn/log
+
 ```
 
