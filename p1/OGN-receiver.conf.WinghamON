@@ -1,0 +1,20 @@
+### Mandatory ###
+
+ReceiverName="WinghamON" # Please follow naming convention (http://wiki.glidernet.org/receiver-naming-convention)
+Latitude="43.8865102"
+Longitude="-81.3252323"
+Altitude="107"
+wifiName=""
+wifiPassword=""
+wifiCountry="CA"
+piUserPassword=""
+EnableCoreOGNTeamRemoteAdmin="true"
+#monitorPort="6070"
+
+### Optional ###
+
+# runAtBoot="" # Allow a specific script to be run at boot time
+# FreqCorr=""
+# GSMCenterFreq=""
+# GSMGain=""
+# enableBias="1" # Enable bias tee for dongles which support it. WARNING: if used with normal antenna this can kill your dongle.

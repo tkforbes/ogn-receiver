@@ -1,0 +1,20 @@
+### Mandatory ###
+
+ReceiverName="GlebeON" # Please follow naming convention (http://wiki.glidernet.org/receiver-naming-convention)
+Latitude="45.399407"
+Longitude="-75.6835607"
+Altitude="67"
+wifiName=""
+wifiPassword=""
+wifiCountry="CA"
+piUserPassword=""
+EnableCoreOGNTeamRemoteAdmin="true"
+#monitorPort="6070"
+
+### Optional ###
+
+# runAtBoot="" # Allow a specific script to be run at boot time
+# FreqCorr=""
+# GSMCenterFreq=""
+# GSMGain=""
+# enableBias="1" # Enable bias tee for dongles which support it. WARNING: if used with normal antenna this can kill your dongle.
