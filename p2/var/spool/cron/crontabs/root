@@ -4,3 +4,4 @@
 */10 * * * * /root/glidernet-autossh 2>/tmp/glidernet-autossh.log
 0 5 * * * /sbin/reboot
 */10 * * * * ( /usr/sbin/ntpdate -u pool.ntp.org ) > /tmp/ntp-sync.log 2>&1
+
