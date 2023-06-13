@@ -9,20 +9,6 @@ root@prince:/home/tf/workdir# cp img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img 
 # extend the file size of the original image
 root@prince:/home/tf/workdir# fallocate -l 3.9G img/ognstation.img 
 
-# resize the second partition with parted
-root@prince:/home/tf/workdir# parted <<'EOT'
-> select img/ognstation.img
-> resizepart 2 100%FREE
-> quit
-> EOT
-GNU Parted 3.4
-Using /dev/nvme0n1
-Welcome to GNU Parted! Type 'help' to view a list of commands.
-(parted) select img/ognstation.img        
-Using /home/tf/workdir/img/ognstation.img
-(parted) resizepart 2 100%FREE                                            
-(parted) quit                                                             
-
 # associate the image file with a loop device
 root@prince:/home/tf/workdir# myloop=`losetup --show --find img/ognstation.img`
 /dev/loop23
@@ -37,6 +23,9 @@ NAME       MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
 loop23       7:23   0  3.5G  0 loop 
 ├─loop23p1 259:8    0  256M  0 part 
 └─loop23p2 259:9    0  3.2G  0 part 
+
+# resize (grow) the second partition with parted
+root@prince:/home/tf/workdir# parted ${myloop} resizepart 2 100%FREE
 
 # cleanup the file system on the second partition. avoids a problem with the next step.
 root@prince:/home/tf/workdir# e2fsck -f ${myloop}p2
