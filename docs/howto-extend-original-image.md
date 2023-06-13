@@ -69,7 +69,11 @@ root@prince:/home/tf/workdir# rsync -av p1/ /mnt/p1/
 
 # copy p2 files
 root@prince:/home/tf/workdir# rsync -av p2/ /mnt/p2/
+
+# set ownership of things changed and added
 root@prince:/home/tf/workdir# chown -R 1000.1000 /mnt/p2/home/pi
+root@prince:/home/tf/workdir# chown -R root.root /mnt/p2/etc
+root@prince:/home/tf/workdir# chown -R root.root /mnt/p2/root
 
 # the following two steps ensure efficient compression of
 # the newly allocated space on p2.
