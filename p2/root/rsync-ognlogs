@@ -1,0 +1,13 @@
+#!/bin/bash
+
+### Loading OGN config
+# Need this hack to allow sourcing from a file in dos format
+source /dev/stdin < <(dos2unix < /boot/OGN-receiver.conf)
+
+if [ "$sendLogs" != "true" ]
+then
+  echo "Send logs not enabled => Exiting" >&2
+  exit 0;
+fi
+
+/usr/bin/rsync -e "ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"  --compress-level=9 --archive --append-verify /data/ogn/log/*.log ognstation@mail.rvss.ca:/data/ogn/log/
