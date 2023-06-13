@@ -6,7 +6,7 @@
 cp img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img img/ognstation.img
 
 # extend the file size of the original image
-fallocate -l 3.4G img/ognstation.img 
+fallocate -l 2.0G img/ognstation.img 
 
 # associate the image file with a loop device
 myloop=`losetup --show --find img/ognstation.img`
@@ -26,12 +26,7 @@ e2fsck -f ${myloop}p2
 # resize the file system in the second partition.
 resize2fs ${myloop}p2
 
-# allocate some additional space on disk.
-#  detach
-#  falloc
-
-# 
-
+# ------------ put content into image ------------------
 
 # make mount directories if necessary
 mkdir /mnt/p1
@@ -41,7 +36,6 @@ mkdir /mnt/p2
 # mount the partitions
 mount ${myloop}p1 /mnt/p1
 mount ${myloop}p2 /mnt/p2
-mount ${myloop}p3 /mnt/p3
 
 # copy p1 files
 rsync -av --no-owner --no-group p1/ /mnt/p1/
@@ -68,7 +62,7 @@ cp p2/etc/fstab /mnt/p2/etc/fstab
 chown 0.0  /mnt/p2/etc/fstab
 chmod 0644 /mnt/p2/etc/fstab
 
-cp --preserve=links p2/etc/localtime /mnt/p2/etc/localtime
+cp -P p2/etc/localtime /mnt/p2/etc/localtime
 
 ### the link itself seems to inherit ownership and mod of the target file,
 ### so no need to run these two commands.
@@ -84,7 +78,37 @@ dd if=/dev/zero of=/mnt/p2/delme; rm /mnt/p2/delme
 # unmount the partitions from the mount points
 umount /mnt/p1/
 umount /mnt/p2/
-umount /mnt/p3/
+
+# detach the loop device.
+losetup --detach ${myloop}
+
+
+# ============ add third partition ==============
+
+# extend the image to create additional free space
+fallocate -l 3.5G img/ognstation.img 
+
+# associate the image file with a loop device
+myloop=`losetup --show --find img/ognstation.img`
+
+# probe the device for its partitions
+partprobe ${myloop}
+
+# optional. just to display info.
+lsblk $myloop
+
+parted ${myloop} mkpart primary ext4 2147MB 3758MB
+
+mkfs.ext4 ${myloop}p3
+
+mount ${myloop}p3 /mnt/p3
+
+mkdir -p /mnt/p3/ogn/log
+
+# add a file of zeros to the filesystem until full, then remove it
+dd if=/dev/zero of=/mnt/p3/delme; rm /mnt/p3/delme
+
+umount /mnt/p3
 
 # detach the loop device.
 losetup --detach ${myloop}
