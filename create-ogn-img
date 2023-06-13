@@ -68,7 +68,7 @@ cp p2/etc/fstab /mnt/p2/etc/fstab
 chown 0.0  /mnt/p2/etc/fstab
 chmod 0644 /mnt/p2/etc/fstab
 
-cp p2/etc/localtime /mnt/p2/etc/localtime
+cp --preserve=links p2/etc/localtime /mnt/p2/etc/localtime
 
 ### the link itself seems to inherit ownership and mod of the target file,
 ### so no need to run these two commands.
