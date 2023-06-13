@@ -74,6 +74,7 @@ root@prince:/home/tf/workdir# rsync -av p2/ /mnt/p2/
 root@prince:/home/tf/workdir# chown -R 1000.1000 /mnt/p2/home/pi
 root@prince:/home/tf/workdir# chown -R root.root /mnt/p2/etc
 root@prince:/home/tf/workdir# chown -R root.root /mnt/p2/root
+root@prince:/home/tf/workdir# chown -R root.root /mnt/p2/var
 
 # the following two steps ensure efficient compression of
 # the newly allocated space on p2.
