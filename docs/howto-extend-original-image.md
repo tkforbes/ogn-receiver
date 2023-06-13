@@ -62,6 +62,8 @@ Number  Start   End     Size    Type     File system  Flags
 root@ONOTTRA805608XL:/home/forbestim/git/ogn-station# parted ${myloop} mkpart primary ext4 2684MB 4295MB
 
 # add ext4 file system to third partition
+root@ONOTTRA805608XL:/home/forbestim/git/ogn-station# mkfs.ext4 ${myloop}p3
+
 
 # make mount directories if necessary
 root@prince:/home/tf/workdir# mkdir /mnt/p1
@@ -80,10 +82,30 @@ root@prince:/home/tf/workdir# rsync -av p1/ /mnt/p1/
 root@prince:/home/tf/workdir# rsync -av p2/ /mnt/p2/
 
 # set ownership of things changed and added
-root@prince:/home/tf/workdir# chown -R 1000.1000 /mnt/p2/home/pi
-root@prince:/home/tf/workdir# chown -R root.root /mnt/p2/etc
-root@prince:/home/tf/workdir# chown -R root.root /mnt/p2/root
-root@prince:/home/tf/workdir# chown -R root.root /mnt/p2/var
+
+root@prince:/home/tf/workdir# cp p2/home/pi/installWittyPi4 /mnt/p2/home/pi/installWittyPi4
+root@prince:/home/tf/workdir# chown 1000.1000 /mnt/p2/home/pi/installWittyPi4
+root@prince:/home/tf/workdir# chmod 0744      /mnt/p2/home/pi/installWittyPi4
+
+root@prince:/home/tf/workdir# cp p2/var/spool/cron/crontabs/root /mnt/p2/var/spool/cron/crontabs/root 
+root@prince:/home/tf/workdir# chown 0.107 /mnt/p2/var/spool/cron/crontabs/root 
+root@prince:/home/tf/workdir# chmod 0600  /mnt/p2/var/spool/cron/crontabs/root 
+
+root@prince:/home/tf/workdir# cp p2/root/rsync-ognlogs /mnt/p2/root/rsync-ognlogs
+root@prince:/home/tf/workdir# chown 0.0  /mnt/p2/root/rsync-ognlogs
+root@prince:/home/tf/workdir# chmod 0755 /mnt/p2/root/rsync-ognlogs
+
+root@prince:/home/tf/workdir# cp p2/root/glidernet-autossh /mnt/p2/root/glidernet-autossh
+root@prince:/home/tf/workdir# chown 0.0  /mnt/p2/root/glidernet-autossh
+root@prince:/home/tf/workdir# chmod 0755 /mnt/p2/root/glidernet-autossh
+
+root@prince:/home/tf/workdir# cp p2/etc/fstab /mnt/p2/etc/fstab
+root@prince:/home/tf/workdir# chown 0.0  /mnt/p2/etc/fstab
+root@prince:/home/tf/workdir# chmod 0644 /mnt/p2/etc/fstab
+
+root@prince:/home/tf/workdir# cp p2/etc/localtime /mnt/p2/etc/localtime
+root@prince:/home/tf/workdir# chown 0.0  /mnt/p2/etc/localtime
+root@prince:/home/tf/workdir# chmod 0777 /mnt/p2/etc/localtime
 
 # the following two steps ensure efficient compression of
 # the newly allocated space on p2.
