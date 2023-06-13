@@ -3,7 +3,7 @@
 tf@prince:/home/tf/workdir# sudo su            
 [sudo] password for tf: 
 
-# make a copy of the original image. we will work on the copy.
+# make a copy of the original image. we will modify the copy.
 root@prince:/home/tf/workdir# cp img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img img/ognstation.img
 
 # extend the file size of the original image
@@ -11,7 +11,7 @@ root@prince:/home/tf/workdir# fallocate -l 3.9G img/ognstation.img
 
 # resize the second partition with parted
 root@prince:/home/tf/workdir# parted <<'EOT'
-> select ./2022-04-29-rpi-lite-ognro-v0.3-stretch.img
+> select img/ognstation.img
 > resizepart 2 100%FREE
 > quit
 > EOT
@@ -24,7 +24,7 @@ Using /home/tf/workdir/img/ognstation.img
 (parted) quit                                                             
 
 # associate the image file with a loop device
-root@prince:/home/tf/workdir# myloop=`losetup --show --find img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img`
+root@prince:/home/tf/workdir# myloop=`losetup --show --find img/ognstation.img`
 /dev/loop23
 
 # probe the device for its partitions
@@ -79,15 +79,12 @@ root@prince:/home/tf/workdir# chown -R root.root /mnt/p2/var
 # the following two steps ensure efficient compression of
 # the newly allocated space on p2.
 
-# add a file of zeros to the filesystem until full
-root@prince:/home/tf/workdir# dd if=/dev/zero of=/mnt/tmp/delme
+# add a file of zeros to the filesystem until full, then remove it
+root@prince:/home/tf/workdir# dd if=/dev/zero of=/mnt/p2/delme; rm /mnt/p2/delme
 dd: writing to '/mnt/p2/delme': No space left on device
 3601449+0 records in
 3601448+0 records out
 1843941376 bytes (1.8 GB, 1.7 GiB) copied, 7.04904 s, 262 MB/s
-
-# delete that same file. 
-root@prince:/home/tf/workdir# rm /mnt/p2/delme
 
 # unmount the partitions from the mount points
 root@prince:/home/tf/workdir# umount /mnt/p1/
@@ -99,7 +96,6 @@ root@prince:/home/tf/workdir# losetup --detach ${myloop}
 # compress the image.
 root@prince:/home/tf/workdir# cd img && zip ognstation.img.zip ognstation.img && cd ..
   adding: ognstation.img (deflated 85%)
-
 
 
 # mount p3 three to /data
