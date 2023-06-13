@@ -43,6 +43,26 @@ resize2fs 1.46.5 (30-Dec-2021)
 Resizing the filesystem on /dev/loop23p2 to 850944 (4k) blocks.
 The filesystem on /dev/loop23p2 is now 850944 (4k) blocks long.
 
+# allocate some additional space on disk.
+#  detach
+#  falloc
+
+# 
+root@ONOTTRA805608XL:/home/forbestim/git/ogn-station# parted ${myloop} p
+Model: Loopback device (loopback)
+Disk /dev/loop18: 4295MB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags: 
+
+Number  Start   End     Size    Type     File system  Flags
+ 1      4194kB  273MB   268MB   primary  fat32        lba
+ 2      273MB   2684MB  2412MB  primary  ext4
+
+root@ONOTTRA805608XL:/home/forbestim/git/ogn-station# parted ${myloop} mkpart primary ext4 2684MB 4295MB
+
+# add ext4 file system to third partition
+
 # make mount directories if necessary
 root@prince:/home/tf/workdir# mkdir /mnt/p1
 root@prince:/home/tf/workdir# mkdir /mnt/p2
