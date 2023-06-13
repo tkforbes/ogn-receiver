@@ -1,0 +1,92 @@
+#!/bin/bash
+
+# task requires super user privileges
+
+# make a copy of the original image. we will modify the copy.
+cp img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img img/ognstation.img
+
+# extend the file size of the original image
+fallocate -l 3.4G img/ognstation.img 
+
+# associate the image file with a loop device
+myloop=`losetup --show --find img/ognstation.img`
+
+# probe the device for its partitions
+partprobe ${myloop}
+
+# optional. just to display info.
+lsblk $myloop
+
+# resize (grow) the second partition with parted
+parted ${myloop} resizepart 2 100%FREE
+
+# cleanup the file system on the second partition. avoids a problem with the next step.
+e2fsck -f ${myloop}p2
+
+# resize the file system in the second partition.
+resize2fs ${myloop}p2
+
+# allocate some additional space on disk.
+#  detach
+#  falloc
+
+# 
+
+
+# make mount directories if necessary
+mkdir /mnt/p1
+mkdir /mnt/p2
+mkdir /mnt/p2
+
+# mount the partitions
+mount ${myloop}p1 /mnt/p1
+mount ${myloop}p2 /mnt/p2
+mount ${myloop}p3 /mnt/p3
+
+# copy p1 files
+rsync -av --no-owner --no-group p1/ /mnt/p1/
+
+# set ownership of things changed and added
+
+cp p2/home/pi/installWittyPi4 /mnt/p2/home/pi/installWittyPi4
+chown 1000.1000 /mnt/p2/home/pi/installWittyPi4
+chmod 0744      /mnt/p2/home/pi/installWittyPi4
+
+cp p2/var/spool/cron/crontabs/root /mnt/p2/var/spool/cron/crontabs/root 
+chown 0.107 /mnt/p2/var/spool/cron/crontabs/root 
+chmod 0600  /mnt/p2/var/spool/cron/crontabs/root 
+
+cp p2/root/rsync-ognlogs /mnt/p2/root/rsync-ognlogs
+chown 0.0  /mnt/p2/root/rsync-ognlogs
+chmod 0755 /mnt/p2/root/rsync-ognlogs
+
+cp p2/root/glidernet-autossh /mnt/p2/root/glidernet-autossh
+chown 0.0  /mnt/p2/root/glidernet-autossh
+chmod 0755 /mnt/p2/root/glidernet-autossh
+
+cp p2/etc/fstab /mnt/p2/etc/fstab
+chown 0.0  /mnt/p2/etc/fstab
+chmod 0644 /mnt/p2/etc/fstab
+
+cp p2/etc/localtime /mnt/p2/etc/localtime
+
+### the link itself seems to inherit ownership and mod of the target file,
+### so no need to run these two commands.
+#root@prince:/home/tf/workdir# chown 0.0  /mnt/p2/etc/localtime
+#root@prince:/home/tf/workdir# chmod 0777 /mnt/p2/etc/localtime
+
+# the following step ensures efficient compression of
+# the newly allocated space on p2.
+
+# add a file of zeros to the filesystem until full, then remove it
+dd if=/dev/zero of=/mnt/p2/delme; rm /mnt/p2/delme
+
+# unmount the partitions from the mount points
+umount /mnt/p1/
+umount /mnt/p2/
+umount /mnt/p3/
+
+# detach the loop device.
+losetup --detach ${myloop}
+
+exit 0
