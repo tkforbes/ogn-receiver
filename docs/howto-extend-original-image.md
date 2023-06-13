@@ -57,22 +57,19 @@ The filesystem on /dev/loop23p2 is now 850944 (4k) blocks long.
 # make mount directories if necessary
 root@prince:/home/tf/workdir# mkdir /mnt/p1
 root@prince:/home/tf/workdir# mkdir /mnt/p2
+root@prince:/home/tf/workdir# mkdir /mnt/p2
 
-# mount the first partition
+# mount the partitions
 root@prince:/home/tf/workdir# mount ${myloop}p1 /mnt/p1
-
-# copy template configuration files
-root@prince:/home/tf/workdir# cp p1/OGN-receiver.conf.* /mnt/p1/
-
-# mount the second partition
 root@prince:/home/tf/workdir# mount ${myloop}p2 /mnt/p2
+root@prince:/home/tf/workdir# mount ${myloop}p3 /mnt/p3
 
-# update glidernet-autossh with custom version
-root@prince:/home/tf/workdir# cp p2/root/root/glidernet-autossh /mnt/p2/root/
+# copy p1 files
+root@prince:/home/tf/workdir# rsync -av p1/ /mnt/p1/
 
-# set correct timezone
-root@prince:/home/tf/workdir# rm /mnt/p2/etc/localtime
-root@prince:/home/tf/workdir# ln -s /usr/share/zoneinfo/America/Montreal /mnt/p2/etc/localtime
+# copy p2 files
+root@prince:/home/tf/workdir# rsync -av p2/ /mnt/p2/
+root@prince:/home/tf/workdir# chown -R 1000.1000 /mnt/p2/home/pi
 
 # the following two steps ensure efficient compression of
 # the newly allocated space on p2.
