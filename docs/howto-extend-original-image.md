@@ -76,10 +76,7 @@ root@prince:/home/tf/workdir# mount ${myloop}p2 /mnt/p2
 root@prince:/home/tf/workdir# mount ${myloop}p3 /mnt/p3
 
 # copy p1 files
-root@prince:/home/tf/workdir# rsync -av p1/ /mnt/p1/
-
-# copy p2 files
-root@prince:/home/tf/workdir# rsync -av p2/ /mnt/p2/
+root@prince:/home/tf/workdir# rsync -av --no-owner --no-group p1/ /mnt/p1/
 
 # set ownership of things changed and added
 
@@ -104,6 +101,9 @@ root@prince:/home/tf/workdir# chown 0.0  /mnt/p2/etc/fstab
 root@prince:/home/tf/workdir# chmod 0644 /mnt/p2/etc/fstab
 
 root@prince:/home/tf/workdir# cp p2/etc/localtime /mnt/p2/etc/localtime
+
+### the link itself seems to inherit ownership and mod of the target file,
+### so no need to run these two commands.
 root@prince:/home/tf/workdir# chown 0.0  /mnt/p2/etc/localtime
 root@prince:/home/tf/workdir# chmod 0777 /mnt/p2/etc/localtime
 
