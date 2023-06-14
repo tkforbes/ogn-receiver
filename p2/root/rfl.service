@@ -1,0 +1,20 @@
+[Unit]
+Description=Record Flight Logs Service
+After=rtlsdr-ogn.service
+After=ntp.service
+After=systemd-timedated.service
+
+[Service]
+Restart=always
+RestartSec=30
+ExecStart=/bin/bash /root/rfl_start.sh
+ExecStop=/bin/bash /root/rfl_stop.sh
+
+[Install]
+WantedBy=multi-user.target
+
+########
+# Copy (or symlink) to /etc/systemd/system/
+# Then type "systemctl daemon-reload"
+# Then enable with "systemctl enable rfl.service"
+# Should come up automatically on reboots

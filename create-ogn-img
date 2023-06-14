@@ -65,6 +65,23 @@ chmod 0644 /mnt/p2/etc/fstab
 # set the timezone
 cp -P p2/etc/localtime /mnt/p2/etc/localtime
 
+# service for logging OGN
+
+cp p2/root/rfl_stop.sh /mnt/p2/root/rfl_stop.sh
+chown 0.0  /mnt/p2/root/rfl_stop.sh
+chmod 0755 /mnt/p2/root/rfl_stop.sh
+
+cp p2/root/rfl_start.sh /mnt/p2/root/rfl_start.sh
+chown 0.0  /mnt/p2/root/rfl_start.sh
+chmod 0755 /mnt/p2/root/rfl_start.sh
+
+cp p2/root/rfl.service /mnt/p2/root/rfl.service
+chown 0.0  /mnt/p2/root/rfl.service
+chmod 0644 /mnt/p2/root/rfl.service
+
+
+cp -P p2/etc/systemd/system/rfl.service /mnt/p2/etc/systemd/system/rfl.service
+
 # reduce network traffic by disabling these services
 rm /mnt/p2/etc/systemd/system/multi-user.target.wants/rpi-eeprom-update.service
 rm /mnt/p2/etc/systemd/system/timers.target.wants/apt-daily-upgrade.timer
