@@ -56,4 +56,14 @@ The receiver is set to use the Montreal timezone.
 
 The receiver will reboot at 5am daily. This will cause a new OGN log to be started. The reboot may resolve a remote connection issue.
 
+### Pi Witty
 
+If you want to install software for the Pi Witty hat, 
+
+ 1. pi@ogn-receiver:~ $ overlayctl disable
+ 1. pi@ogn-receiver:~ $ sudo reboot
+ 1. login again
+ 1. pi@ogn-receiver:~ $ cd ~
+ 1. pi@ogn-receiver:~ $ ./installWittyPi4
+
+Remember to enable overlayctl once your software is setup.
