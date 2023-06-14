@@ -29,9 +29,9 @@ resize2fs ${myloop}p2
 # ------------ put content into image ------------------
 
 # make mount directories if necessary
-mkdir /mnt/p1
-mkdir /mnt/p2
-mkdir /mnt/p2
+mkdir -p /mnt/p1
+mkdir -p /mnt/p2
+mkdir -p /mnt/p3
 
 # mount the partitions
 mount ${myloop}p1 /mnt/p1
@@ -62,7 +62,14 @@ cp p2/etc/fstab /mnt/p2/etc/fstab
 chown 0.0  /mnt/p2/etc/fstab
 chmod 0644 /mnt/p2/etc/fstab
 
+# set the timezone
 cp -P p2/etc/localtime /mnt/p2/etc/localtime
+
+# reduce network traffic by disabling these services
+rm /mnt/p2/etc/systemd/system/multi-user.target.wants/rpi-eeprom-update.service
+rm /mnt/p2/etc/systemd/system/timers.target.wants/apt-daily-upgrade.timer
+rm /mnt/p2/etc/systemd/system/timers.target.wants/apt-daily.timer
+
 
 ### the link itself seems to inherit ownership and mod of the target file,
 ### so no need to run these two commands.
