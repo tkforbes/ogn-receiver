@@ -27,10 +27,9 @@ OGN-receiver.conf.cpl3  OGN-receiver.conf.GlebeON  OGN-receiver.conf.WinghamON
 
 You will have to provide wifiName, wifiPassword and piUserPassword.
 
+ . If you want ssh access from mail.rvss.ca, define _EnableCoreOGNTeamRemoteAdmin="true"_.
 
-If you want ssh access from mail.rvss.ca, define _EnableCoreOGNTeamRemoteAdmin="true"_.
-
-If you want logs to be copied to mail.rvss.ca, define _sendLogs="true"_.
+ . If you want logs to be copied to mail.rvss.ca, define _sendLogs="true"_.
 
 ## Stuff.
 
