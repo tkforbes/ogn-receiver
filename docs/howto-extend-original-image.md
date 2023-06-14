@@ -1,3 +1,5 @@
+This document was used during development. It has been abandoned and isn't maintained.
+
 ```
 # task requires super user privileges
 tf@prince:/home/tf/workdir# sudo su            
