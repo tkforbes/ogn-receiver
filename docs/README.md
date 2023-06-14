@@ -1,8 +1,8 @@
 # Standard OGN Receiver image
 
-This project builds a RVSS standard OGN Receiver image based on Sébastien Chaumontet contribution to the OGN project. http://wiki.glidernet.org/downloads
+This project builds a RVSS standard OGN Receiver image based on Sébastien Chaumontet's contribution to the OGN project. http://wiki.glidernet.org/downloads
 
-Receivers build from this image can
+Receivers built from this image can
 
  1. Be reached remotely via mail.rvss.ca (if you have an account on that server). (optional)
  1. Keep OGN logs on SD card. 1.5 GB of reserved space.
@@ -12,7 +12,13 @@ Receivers build from this image can
 
 These receiver names are recognized. Fixed ports are used for autossh.
 
-CPL3 FALLFLD GlebeON PerthON TglwoodON WinghamON
+ * CPL3		6000
+ * FALLFLD	6020
+ * Fallfld3	6040
+ * GlebeON	6060
+ * PerthON	6080
+ * TglwoodON	6100
+ * WinghamON	6200
 
 ## Instructions.
 
