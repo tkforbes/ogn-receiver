@@ -2,6 +2,13 @@
 
 # task requires super user privileges
 
+## TODO : check super user !
+
+## TODO : check md5sum of original image before proceding
+
+
+# ------------ expand the size of partition two --------
+
 # make a copy of the original image. we will modify the copy.
 cp img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img img/ognstation.img
 
@@ -26,7 +33,7 @@ e2fsck -f ${myloop}p2
 # resize the file system in the second partition.
 resize2fs ${myloop}p2
 
-# ------------ put content into image ------------------
+# ------------ update image with our content -------------
 
 # make mount directories if necessary
 mkdir -p /mnt/p1
@@ -46,18 +53,22 @@ cp p2/home/pi/installWittyPi4 /mnt/p2/home/pi/installWittyPi4
 chown 1000.1000 /mnt/p2/home/pi/installWittyPi4
 chmod 0744      /mnt/p2/home/pi/installWittyPi4
 
+# adjusted crontab for root
 cp p2/var/spool/cron/crontabs/root /mnt/p2/var/spool/cron/crontabs/root 
 chown 0.107 /mnt/p2/var/spool/cron/crontabs/root 
 chmod 0600  /mnt/p2/var/spool/cron/crontabs/root 
 
+# rsync for ogn logs
 cp p2/root/rsync-ognlogs /mnt/p2/root/rsync-ognlogs
 chown 0.0  /mnt/p2/root/rsync-ognlogs
 chmod 0755 /mnt/p2/root/rsync-ognlogs
 
+# custom autossh
 cp p2/root/glidernet-autossh /mnt/p2/root/glidernet-autossh
 chown 0.0  /mnt/p2/root/glidernet-autossh
 chmod 0755 /mnt/p2/root/glidernet-autossh
 
+# custom fstab
 cp p2/etc/fstab /mnt/p2/etc/fstab
 chown 0.0  /mnt/p2/etc/fstab
 chmod 0644 /mnt/p2/etc/fstab
@@ -66,7 +77,6 @@ chmod 0644 /mnt/p2/etc/fstab
 cp -P p2/etc/localtime /mnt/p2/etc/localtime
 
 # service for logging OGN
-
 cp p2/root/rfl_stop.sh /mnt/p2/root/rfl_stop.sh
 chown 0.0  /mnt/p2/root/rfl_stop.sh
 chmod 0755 /mnt/p2/root/rfl_stop.sh
@@ -79,22 +89,16 @@ cp p2/root/rfl.service /mnt/p2/root/rfl.service
 chown 0.0  /mnt/p2/root/rfl.service
 chmod 0644 /mnt/p2/root/rfl.service
 
-
+# enable OGN logging service
 cp -P p2/etc/systemd/system/rfl.service /mnt/p2/etc/systemd/system/rfl.service
 
-# reduce network traffic by disabling these services
+# reduce Internet access by disabling these services
 rm /mnt/p2/etc/systemd/system/multi-user.target.wants/rpi-eeprom-update.service
 rm /mnt/p2/etc/systemd/system/timers.target.wants/apt-daily-upgrade.timer
 rm /mnt/p2/etc/systemd/system/timers.target.wants/apt-daily.timer
 
-
-### the link itself seems to inherit ownership and mod of the target file,
-### so no need to run these two commands.
-#root@prince:/home/tf/workdir# chown 0.0  /mnt/p2/etc/localtime
-#root@prince:/home/tf/workdir# chmod 0777 /mnt/p2/etc/localtime
-
-# the following step ensures efficient compression of
-# the newly allocated space on p2.
+# the following step ensures efficient compression of our new image
+# by filling empty space with zeros.
 
 # add a file of zeros to the filesystem until full, then remove it
 dd if=/dev/zero of=/mnt/p2/delme; rm /mnt/p2/delme
@@ -109,7 +113,7 @@ losetup --detach ${myloop}
 
 # ============ add third partition ==============
 
-# extend the image to create additional free space
+# extend the image, creating additional free space for this partition
 fallocate -l 3.5G img/ognstation.img 
 
 # associate the image file with a loop device
@@ -121,13 +125,20 @@ partprobe ${myloop}
 # optional. just to display info.
 lsblk $myloop
 
+# create third partition
 parted ${myloop} mkpart primary ext4 2147MB 3758MB
 
+# put ext4 filesystem on third partition
 mkfs.ext4 ${myloop}p3
 
+# mount
 mount ${myloop}p3 /mnt/p3
 
+# create the directory where OGN logs will be written
 mkdir -p /mnt/p3/ogn/log
+
+# the following step ensures efficient compression of our new image
+# by filling empty space with zeros.
 
 # add a file of zeros to the filesystem until full, then remove it
 dd if=/dev/zero of=/mnt/p3/delme; rm /mnt/p3/delme
