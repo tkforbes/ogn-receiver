@@ -12,7 +12,7 @@ Receivers build from this image can
 
 These receiver names are recognized. Fixed ports are used for autossh.
 
-OGN-receiver.conf.cpl3  OGN-receiver.conf.GlebeON  OGN-receiver.conf.WinghamON
+CPL3 FALLFLD GlebeON PerthON TglwoodON WinghamON
 
 ## Instructions.
 
