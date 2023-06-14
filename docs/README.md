@@ -18,7 +18,7 @@ These receiver names are recognized. Fixed ports are used for autossh.
  * GlebeON	6060
  * PerthON	6080
  * TglwoodON	6100
- * WinghamON	6200
+ * WinghamON	6120
 
 ## Instructions.
 
