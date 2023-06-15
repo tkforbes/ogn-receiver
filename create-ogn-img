@@ -144,7 +144,7 @@ partprobe ${myloop}
 lsblk $myloop
 
 # create third partition
-parted ${myloop} mkpart primary ext4 2147MB 3758MB
+parted ${myloop} mkpart primary ext4 2147MB 3746MB
 
 # put ext4 filesystem on third partition
 mkfs.ext4 ${myloop}p3
