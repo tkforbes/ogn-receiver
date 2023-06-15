@@ -3,9 +3,17 @@
 # task requires super user privileges
 
 ## TODO : check super user !
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
 
-## TODO : check md5sum of original image before proceding
-
+# check md5sum of original image before proceding
+md5sum --check foundational-image.md5sum 
+if [ $? -ne 0 ]; then 
+  echo "You don't have the correct starting image"
+  exit
+fi
 
 # ------------ expand the size of partition two --------
 
