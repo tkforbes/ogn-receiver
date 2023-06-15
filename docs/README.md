@@ -2,7 +2,7 @@
 
 This project builds a RVSS standard OGN Receiver image for a Raspberry Pi. The image is based on Sébastien Chaumontet's contribution to the OGN project. http://wiki.glidernet.org/downloads
 
-Receivers running the RVSS standard OGN Receiver image
+Receivers running the RVSS standard OGN Receiver image:
 
  1. can be administered remotely (optional) by ssh via mail.rvss.ca provided you have a shell account on that server.
  1. keep OGN logs on the SD card in 1.5 GB of reserved space.
@@ -22,7 +22,7 @@ These receiver names are recognized. Fixed ports are used for autossh.
 
 ## Instructions.
 
-4 GB SD card, minimum. Additional space will be ignored:
+4 GB SD card, minimum. Additional space will be ignored.
 
  1. Download zip file from mail.rvss.ca:/data/img/ognreceiver.img.zip
  1. Unzip
