@@ -10,4 +10,4 @@ then
   exit 0;
 fi
 
-/usr/bin/rsync -e "ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"  --compress-level=9 --archive --append-verify /data/ogn/log/*.log ognstation@mail.rvss.ca:/data/ogn/log/
+/usr/bin/rsync -e "ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"  --compress-level=9 --archive --append-verify /data/ogn/log/*.log ognstation@ogn.rvss.ca:/data/ogn/log/

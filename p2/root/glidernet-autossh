@@ -20,7 +20,7 @@ then
 fi
 
 echo "Checking internet connection." >&2
-/usr/bin/wget --spider --quiet "http://mail.rvss.ca/"
+/usr/bin/wget --spider --quiet "http://ogn.rvss.ca/"
 if [ "$?" -ne 0 ]
 then
   echo "Not Connected => Exiting" >&2
@@ -47,7 +47,7 @@ fi
 if [ "$?" -eq 0 ]
 then
  echo "Ok ${port}" >&2
-  /usr/bin/autossh -f -N -R $monitorPort:localhost:22 autossh@mail.rvss.ca -M $(($monitorPort+1060)) -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3"
+  /usr/bin/autossh -f -N -R $monitorPort:localhost:22 autossh@ogn.rvss.ca -M $(($monitorPort+1060)) -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o "ServerAliveInterval 60" -o "ServerAliveCountMax 3"
   exit 0
 fi
 exit 1
