@@ -5,10 +5,10 @@ UPDATE_URI="https://raw.githubusercontent.com/snip/OGN-receiver-RPI-image/master
 if [ "`grep Hardware /proc/cpuinfo | awk '{ print $3 }'`" == "BCM2711" ]
   then
     echo "RPi4/CM4 detected => Will use OGN ARM version"
-    OGNBINARYURL="http://download.glidernet.org/arm/rtlsdr-ogn-bin-ARM-latest.tgz"
+    OGNBINARY="rtlsdr-ogn-bin-ARM-latest.tgz"
   else
     echo "Will use OGN GPU version"
-    OGNBINARYURL="http://download.glidernet.org/rpi-gpu/rtlsdr-ogn-bin-RPI-GPU-latest.tgz"
+    OGNBINARY="rtlsdr-ogn-bin-RPI-GPU-latest.tgz"
 fi
 GEOIDSEPARURL="http://download.glidernet.org/common/WW15MGH.DAC"
 WORK_PATH="/root"
@@ -112,7 +112,9 @@ EOWIFI
   
   ### Self upgrade
   checkInternet "$UPDATE_URI"
-  update_self
+
+  # removed. we don't want this custom file updated.
+# update_self 
   # Should never be reach as exec is used except if it failed
 fi
 
@@ -122,10 +124,11 @@ fi
 /root/glidernet-autossh
 
 ### Upgrade rtlsdr-ogn binaries
-checkInternet "$OGNBINARYURL"
-echo "Downloading and installing $OGNBINARYURL"
+
 cd /home/pi
-/usr/bin/wget $OGNBINARYURL --quiet -O - | tar xzvf -
+
+# untar the /
+tar xzvf $OGNBINARY
 cd rtlsdr-ogn
 chown root gsm_scan
 chmod a+s  gsm_scan

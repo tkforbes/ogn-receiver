@@ -97,6 +97,15 @@ cp p2/root/rfl.service /mnt/p2/root/rfl.service
 chown 0.0  /mnt/p2/root/rfl.service
 chmod 0644 /mnt/p2/root/rfl.service
 
+# install these to avoid downloading from Internet.
+cp p2/home/pi/rtlsdr-ogn-bin-ARM-latest.tgz /mnt/p2/home/pi/rtlsdr-ogn-bin-ARM-latest.tgz
+chown 1000.1000 /mnt/p2/home/pi/rtlsdr-ogn-bin-ARM-latest.tgz
+chmod 0644 /mnt/p2/home/pi/rtlsdr-ogn-bin-ARM-latest.tgz
+
+cp p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz /mnt/p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+chown 1000.1000 /mnt/p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+chmod 0644 /mnt/p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+
 # enable OGN logging service
 cp -P p2/etc/systemd/system/rfl.service /mnt/p2/etc/systemd/system/rfl.service
 
