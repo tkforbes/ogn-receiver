@@ -31,10 +31,13 @@ These receiver names are recognized. Fixed ports are used for autossh.
 
 OGN-receiver.conf.cpl3  OGN-receiver.conf.GlebeON  OGN-receiver.conf.WinghamON
 
-You will have to provide wifiName, wifiPassword and piUserPassword.
+The template files are in the same directory as OGN-receiver.conf.
 
- * If you want ssh access from mail.rvss.ca, define _EnableCoreOGNTeamRemoteAdmin="true"_.
- * If you want logs to be copied to mail.rvss.ca, define _sendLogs="true"_.
+OGN-receiver.conf must have _wifiName, wifiPassword_ and _piUserPassword_ defined.
+
+If you want ssh access from mail.rvss.ca, define _EnableCoreOGNTeamRemoteAdmin="true"_.
+
+If you want logs to be copied to mail.rvss.ca, define _sendLogs="true"_.
 
 ## Stuff.
 
@@ -42,9 +45,11 @@ You will have to provide wifiName, wifiPassword and piUserPassword.
 
 There is 1.5 GB of space for OGN log files. ATM, this is unmanaged; it could theoretically fill to capacity. If you are concerned about approaching the limit, login to your receiver and delete some files from /data/ogn/log/
 
-OGN log file names are constructed from the name of your receiver and the GMT time at the start of logging.
+OGN log file names are constructed from the name of your receiver and the UTC time at the start of logging.
 
 ### Access to your receiver.
+
+If you defined _EnableCoreOGNTeamRemoteAdmin="true"_ and have a shell account on mail.rvss.ca...
 
  1. Login to mail.rvss.ca
  1. ssh pi@localhost -p PORT
