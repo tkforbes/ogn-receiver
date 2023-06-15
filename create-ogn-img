@@ -106,8 +106,9 @@ cp p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz /mnt/p2/home/pi/rtlsdr-ogn-bin-R
 chown 1000.1000 /mnt/p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
 chmod 0644 /mnt/p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
 
-# enable OGN logging service
+# create and enable OGN logging service
 cp -P p2/etc/systemd/system/rfl.service /mnt/p2/etc/systemd/system/rfl.service
+cp -P p2/etc/systemd/system/multi-user.target.wants/rfl.service /mnt/p2/etc/systemd/system/multi-user.target.wants/rfl.service
 
 # reduce Internet access by disabling these services
 rm /mnt/p2/etc/systemd/system/multi-user.target.wants/rpi-eeprom-update.service
