@@ -22,7 +22,7 @@ These receiver names are recognized. Fixed ports are used for autossh.
 
 ## Instructions.
 
-4 GB SD card, minimum. Additional space will be ignored.
+4 GB SD card, minimum. Additional space will be ignored:
 
  1. Download zip file from mail.rvss.ca:/data/img/ognreceiver.img.zip
  1. Unzip
