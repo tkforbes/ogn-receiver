@@ -16,13 +16,13 @@ fi
 # ------------ expand the size of partition two --------
 
 # make a copy of the original image. we will modify the copy.
-cp img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img img/ognstation.img
+cp img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img img/ognreceiver.img
 
 # extend the file size of the original image
-fallocate -l 2.0G img/ognstation.img 
+fallocate -l 2.0G img/ognreceiver.img 
 
 # associate the image file with a loop device
-myloop=`losetup --show --find img/ognstation.img`
+myloop=`losetup --show --find img/ognreceiver.img`
 
 # probe the device for its partitions
 partprobe ${myloop}
@@ -130,10 +130,10 @@ losetup --detach ${myloop}
 # ============ add third partition ==============
 
 # extend the image, creating additional free space for this partition
-fallocate -l 3.5G img/ognstation.img 
+fallocate -l 3.5G img/ognreceiver.img 
 
 # associate the image file with a loop device
-myloop=`losetup --show --find img/ognstation.img`
+myloop=`losetup --show --find img/ognreceiver.img`
 
 # probe the device for its partitions
 partprobe ${myloop}
