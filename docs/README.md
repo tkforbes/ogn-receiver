@@ -4,9 +4,9 @@ This project builds a RVSS standard OGN Receiver image for a Raspberry Pi. The i
 
 Receivers running the RVSS standard OGN Receiver image:
 
- 1. can be administered remotely (optional) by ssh via mail.rvss.ca provided you have a shell account on that server.
+ 1. can be administered remotely (optional) by ssh via ogn.rvss.ca provided you have a shell account on that server.
  1. keep OGN logs on the SD card in 1.5 GB of reserved space.
- 1. optionally send the OGN logs to mail.rvss.ca for safekeeping and central access.
+ 1. optionally send the OGN logs to ogn.rvss.ca for safekeeping and central access.
 
 ## Known OGN Receiver names.
 
@@ -24,7 +24,7 @@ These receiver names are recognized. Fixed ports are used for autossh.
 
 4 GB SD card, minimum. Additional space will be ignored.
 
- 1. Download zip file from mail.rvss.ca:/data/img/ognreceiver.img.zip
+ 1. Download zip file from ogn.rvss.ca:/data/img/ognreceiver.img.zip
  1. Unzip
  1. Burn img to your SD card.
  1. Update OGN-receiver.conf. You can overwrite with one of these templates for convenience.
@@ -35,9 +35,9 @@ The template files are in the same directory as OGN-receiver.conf.
 
 OGN-receiver.conf must have _wifiName, wifiPassword_ and _piUserPassword_ defined.
 
-If you want ssh access from mail.rvss.ca, define _EnableCoreOGNTeamRemoteAdmin="true"_.
+If you want ssh access from ogn.rvss.ca, define _EnableCoreOGNTeamRemoteAdmin="true"_.
 
-If you want logs to be copied to mail.rvss.ca, define _sendLogs="true"_.
+If you want logs to be copied to ogn.rvss.ca, define _sendLogs="true"_.
 
 ## Stuff.
 
@@ -49,9 +49,9 @@ OGN log file names are constructed from the name of your receiver and the UTC ti
 
 ### Access to your receiver.
 
-If you defined _EnableCoreOGNTeamRemoteAdmin="true"_ and have a shell account on mail.rvss.ca...
+If you defined _EnableCoreOGNTeamRemoteAdmin="true"_ and have a shell account on ogn.rvss.ca...
 
- 1. Login to mail.rvss.ca
+ 1. Login to ogn.rvss.ca
  1. ssh pi@localhost -p PORT
  1. provide the password you specified for piUserPassword in OGN-receiver.conf.
 
