@@ -9,7 +9,6 @@ wifiPassword=""
 wifiCountry="CA"
 piUserPassword=""
 EnableCoreOGNTeamRemoteAdmin="true"
-#monitorPort="6070"
 
 ### Optional ###
 
