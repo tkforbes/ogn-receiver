@@ -1,6 +1,6 @@
 # Standard OGN Receiver image
 
-This project builds a RVSS standard OGN Receiver image for a Raspberry Pi. The image is based on [Sébastien Chaumontet's contribution to the OGN project](http://wiki.glidernet.org/downloads).
+This project builds a RVSS standard OGN Receiver image for a Raspberry Pi. The image extends [Sébastien Chaumontet's contribution to the OGN project](http://wiki.glidernet.org/downloads) with custom content and behaviour.
 
 Receivers running the RVSS standard OGN Receiver image:
 
@@ -47,9 +47,13 @@ There is 1.5 GB of space for OGN log files. ATM, this is unmanaged; it could the
 
 OGN log file names are constructed from the name of your receiver and the UTC time at the start of logging.
 
-### Access to your receiver.
+### Access to your remote receiver.
 
-If you defined _EnableCoreOGNTeamRemoteAdmin="true"_ and have a shell account on ogn.rvss.ca...
+If your receiver is at a remote location, you can access it if
+ - you defined _EnableCoreOGNTeamRemoteAdmin="true"_
+ - you have a shell account on ogn.rvss.ca
+
+
 
  1. Login to ogn.rvss.ca
  1. ssh pi@localhost -p PORT
