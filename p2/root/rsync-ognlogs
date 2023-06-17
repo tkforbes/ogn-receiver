@@ -6,8 +6,11 @@ source /dev/stdin < <(dos2unix < /boot/OGN-receiver.conf)
 
 if [ "$sendLogs" != "true" ]
 then
-  echo "Send logs not enabled => Exiting" >&2
+  echo "Not sending logs. Feature not enabled. => Exiting" >&2
   exit 0;
 fi
 
+# this is a very efficient rsync command for log files which will tend
+# to be extended as the day goes on. the command appends data to existing
+# files or replaces entire files if required. transfers are compressed.  
 /usr/bin/rsync -e "ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"  --compress-level=9 --archive --append-verify /data/ogn/log/*.log ognstation@ogn.rvss.ca:/data/ogn/log/
