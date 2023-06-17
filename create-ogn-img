@@ -3,23 +3,25 @@
 # task requires super user privileges
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root"
-  exit
+  exit 1
 fi
 
 # check md5sum of original image before proceding
+echo "checking base image "
 md5sum --check foundational-image.md5sum 
 if [ $? -ne 0 ]; then 
   echo "You don't have the correct starting image"
-  exit
+  exit 1
 fi
 
 # ------------ expand the size of partition two --------
 
 # make a copy of the original image. we will modify the copy.
+echo "creating working copy"
 cp img/2022-04-29-rpi-lite-ognro-v0.3-stretch.img img/ognreceiver.img
 
 # extend the file size of the original image
-fallocate -l 2.0G img/ognreceiver.img 
+fallocate -l 2.2G img/ognreceiver.img 
 
 # associate the image file with a loop device
 myloop=`losetup --show --find img/ognreceiver.img`
@@ -120,6 +122,7 @@ rm /mnt/p2/etc/systemd/system/timers.target.wants/apt-daily.timer
 # by filling empty space with zeros.
 
 # add a file of zeros to the filesystem until full, then remove it
+echo "filling p2 with zeros"
 dd if=/dev/zero of=/mnt/p2/delme; rm /mnt/p2/delme
 
 # unmount the partitions from the mount points
@@ -145,7 +148,7 @@ partprobe ${myloop}
 lsblk $myloop
 
 # create third partition
-parted ${myloop} mkpart primary ext4 2147MB 3746MB
+parted ${myloop} mkpart primary ext4 2362MB 3746MB
 
 # put ext4 filesystem on third partition
 mkfs.ext4 ${myloop}p3
@@ -160,6 +163,7 @@ mkdir -p /mnt/p3/ogn/log
 # by filling empty space with zeros.
 
 # add a file of zeros to the filesystem until full, then remove it
+echo "filling p3 with zeros"
 dd if=/dev/zero of=/mnt/p3/delme; rm /mnt/p3/delme
 
 umount /mnt/p3
