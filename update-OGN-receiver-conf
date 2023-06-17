@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#
+# this script can update the img with a custom OGN-receiver.conf
+# so that it is already in place when you burn the SD card.
+# you would typically do that immediately after building the image
+# and only when you intend to test the image locally.
+#
+# DANGER : your private WiFi credentials may be in your
+#          OGN configuration file!
+
+# associate the image file with a loop device
+myloop=`losetup --show --find img/ognreceiver.img`
+
+# probe the device for its partitions
+partprobe ${myloop}
+
+# mount the partitions
+mount ${myloop}p1 /mnt/p1
+
+cp OGN-receiver.conf /mnt/p1/OGN-receiver.conf
+cat /mnt/p1/OGN-receiver.conf
+umount /mnt/p1
+
+# detach the loop device.
+losetup --detach ${myloop}
+exit 0
