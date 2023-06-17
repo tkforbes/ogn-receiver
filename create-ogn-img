@@ -50,6 +50,9 @@ mkdir -p /mnt/p3
 mount ${myloop}p1 /mnt/p1
 mount ${myloop}p2 /mnt/p2
 
+# remove Sébastien Chaumontet's public key
+rm /mnt/p2/home/pi/.ssh/authorized_keys2
+
 # copy p1 files
 rsync -av --no-owner --no-group p1/ /mnt/p1/
 
