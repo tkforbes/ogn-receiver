@@ -1,4 +1,4 @@
-
+```
 
 git clone or git pull this project (repo) to a Linux host where you have superuser (root) access.
 
@@ -46,7 +46,7 @@ $ dd if=img/ognreceiver.img of=/dev/sda bs=1M
 3584+0 records out
 3758096384 bytes (3.8 GB, 3.5 GiB) copied, 575.475 s, 6.5 MB/s
 
+Eject the SD card from your computer. It is ready to insert into the Raspberry Pi.
 
 
-
-
+```
