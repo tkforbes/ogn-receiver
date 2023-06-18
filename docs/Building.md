@@ -21,6 +21,9 @@ $ sudo su
 Password:
 $ whoami
 root
+```
+
+Create the OGN image
 
 ```
 $ ./create-ogn-image
@@ -28,14 +31,14 @@ $ ./create-ogn-image
 
 A file named img/ognreceiver.img is written. This file is under 4 GB in size.
 
-$ ls -lh img/ognreceiver.img 
 ```
+$ ls -lh img/ognreceiver.img 
 -rw-r--r-- 1 root root 3.5G Jun 17 16:13 img/ognreceiver.img
 ```
 
 Write the image to your SD card. Note that the device name assigned for your SD card by your Linux host will be different than this example. Your Linux host might automatically mount the partitions on your SD card when you insert it. In that case, unmount the partitions first. The command will be something like this:
 
-When you insert the SD card to your computer, its partitions may be mounted automatically. You must unmount before the card can be overwritten with the OGN Receiver image 
+When you insert the SD card your computer may mount its partitions automatically. You must unmount those partitions before the card can be overwritten with the OGN Receiver image.
 
 Look for the name of the device and the mountpoint with this command. You will need to note both.  
 
