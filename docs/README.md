@@ -29,7 +29,8 @@ These receiver names are recognized. Fixed ports are used for autossh.
  1. Burn img to your SD card.
  1. Update OGN-receiver.conf. You can overwrite with one of these templates for convenience.
 
-OGN-receiver.conf.cpl3  OGN-receiver.conf.GlebeON  OGN-receiver.conf.WinghamON
+[OGN-receiver.conf.CPL3](p1/OGN-receiver.conf.CPL3) [OGN-receiver.conf.GlebeON](p1/OGN-receiver.conf.GlebeON) [OGN-receiver.conf.WinghamON](p1/OGN-receiver.conf.WinghamON)
+
 
 The template files are in the same directory as OGN-receiver.conf.
 
