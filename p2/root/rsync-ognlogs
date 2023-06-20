@@ -10,7 +10,10 @@ then
   exit 0;
 fi
 
+# name of the logfile is prefixed with receiver name and date
+logFile=/data/ogn/log/${ReceiverName}-$(date '+%Y%m%d')-rsync-ognlog.log
+
 # this is a very efficient rsync command for log files which will tend
 # to be extended as the day goes on. the command appends data to existing
-# files or replaces entire files if required. transfers are compressed.  
-/usr/bin/rsync -e "ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --log-file=/tmp/rsync-ognlogs.log  --compress-level=9 --archive --append-verify /data/ogn/log/*.log ognstation@ogn.rvss.ca:/data/ogn/log/
+# files or replaces entire files if required. transfers are compressed.
+/usr/bin/rsync -e "ssh -q -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" --log-file=${logFile} --compress-level=9 --archive --append-verify /data/ogn/log/*.log ognstation@ogn.rvss.ca:/data/ogn/log/
