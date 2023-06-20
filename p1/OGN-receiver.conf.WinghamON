@@ -1,19 +1,22 @@
-### Mandatory ###
+# ================= Update every value in this section ===================
+wifiName="** CHANGE **"
+wifiPassword="** CHANGE **"
+piUserPassword="** CHANGE **" 
 
-ReceiverName="WinghamON" # Please follow naming convention (http://wiki.glidernet.org/receiver-naming-convention)
-Latitude="43.8865102"
-Longitude="-81.3252323"
-Altitude="107"
-wifiName=""
-wifiPassword=""
+# ================= These values are correct for WinghamON ===============
+ReceiverName="WinghamON"
 wifiCountry="CA"
-piUserPassword=""
-EnableCoreOGNTeamRemoteAdmin="true"
+Latitude="45.10496"
+Longitude="-75.62368"
+Altitude="87"
+EnableCoreOGNTeamRemoteAdmin="true" # enable ssh from remote server
+sendLogs="true" # send logs to central server
 
 ### Optional ###
-
+#
 # runAtBoot="" # Allow a specific script to be run at boot time
 # FreqCorr=""
 # GSMCenterFreq=""
 # GSMGain=""
 # enableBias="1" # Enable bias tee for dongles which support it. WARNING: if used with normal antenna this can kill your dongle.
+
