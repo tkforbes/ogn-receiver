@@ -1,0 +1,18 @@
+### Mandatory ###
+wifiName=""
+wifiPassword=""
+ReceiverName="PerthON" # Please follow naming convention (http://wiki.glidernet.org/receiver-naming-convention)
+Latitude="44.8413333"
+Longitude="-76.23983333"
+Altitude="165"
+wifiCountry="CA"
+piUserPassword=""
+EnableCoreOGNTeamRemoteAdmin="true"
+
+### Optional ###
+
+# runAtBoot="" # Allow a specific script to be run at boot time
+# FreqCorr=""
+# GSMCenterFreq=""
+# GSMGain=""
+# enableBias="1" # Enable bias tee for dongles which support it. WARNING: if used with normal antenna this can kill your dongle.
