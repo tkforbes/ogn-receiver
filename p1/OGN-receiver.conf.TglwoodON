@@ -1,0 +1,22 @@
+# ================= Update every value in this section ===================
+wifiName="** CHANGE **"
+wifiPassword="** CHANGE **"
+piUserPassword="** CHANGE **" 
+
+# ================= These values are correct for WinghamON ===============
+ReceiverName="TglwoodON"
+wifiCountry="CA"
+Latitude="45.33683333"
+Longitude="-75.74933333"
+Altitude="87"
+EnableCoreOGNTeamRemoteAdmin="true" # enable ssh from remote server
+sendLogs="true" # send logs to central server
+
+### Optional ###
+#
+# runAtBoot="" # Allow a specific script to be run at boot time
+# FreqCorr=""
+# GSMCenterFreq=""
+# GSMGain=""
+# enableBias="1" # Enable bias tee for dongles which support it. WARNING: if used with normal antenna this can kill your dongle.
+
