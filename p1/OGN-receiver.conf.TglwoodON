@@ -3,7 +3,7 @@ wifiName="** CHANGE **"
 wifiPassword="** CHANGE **"
 piUserPassword="** CHANGE **" 
 
-# ================= These values are correct for WinghamON ===============
+# ================= These values are correct for TglwoodON ===============
 ReceiverName="TglwoodON"
 wifiCountry="CA"
 Latitude="45.33683333"
