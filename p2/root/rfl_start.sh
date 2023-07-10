@@ -9,7 +9,7 @@ source /dev/stdin < <(dos2unix < /boot/OGN-receiver.conf)
 
 # magic delay because the service does not seem to be able to coordinate
 # with system time being set properly
-sleep 20
+sleep 60
 
 # Timestamp log file
 current_time=$(date -u "+%Y%m%dT%H%M%SZ")
