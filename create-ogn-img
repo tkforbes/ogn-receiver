@@ -100,12 +100,13 @@ cp p2/root/rfl.service /mnt/p2/root/rfl.service
 chown 0.0  /mnt/p2/root/rfl.service
 chmod 0644 /mnt/p2/root/rfl.service
 
-# install these to avoid downloading from Internet.
-cp p2/home/pi/rtlsdr-ogn-bin-ARM-latest.tgz /mnt/p2/home/pi/rtlsdr-ogn-bin-ARM-latest.tgz
+# install these compressed bin files so that the OGN Receiver
+# avoids downloading them from Internet on every run.
+curl -o /mnt/p2/home/pi/rtlsdr-ogn-bin-ARM-latest.tgz http://download.glidernet.org/arm/rtlsdr-ogn-bin-ARM-latest.tgz
 chown 1000.1000 /mnt/p2/home/pi/rtlsdr-ogn-bin-ARM-latest.tgz
-chmod 0644 /mnt/p2/home/pi/rtlsdr-ogn-bin-ARM-latest.tgz
+chmod 0644      /mnt/p2/home/pi/rtlsdr-ogn-bin-ARM-latest.tgz
 
-cp p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz /mnt/p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
+curl -o /mnt/p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz http://download.glidernet.org/rpi-gpu/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
 chown 1000.1000 /mnt/p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
 chmod 0644 /mnt/p2/home/pi/rtlsdr-ogn-bin-RPI-GPU-latest.tgz
 
